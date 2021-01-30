@@ -1,0 +1,11 @@
+#Menu {
+    background-color: rgb(230, 40, 40);
+}
+
+.active {
+    font-weight: bolder;
+}
+
+.imgMenu {
+    width: 100px;
+}
