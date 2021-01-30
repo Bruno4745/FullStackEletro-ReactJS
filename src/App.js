@@ -3,7 +3,6 @@ import { Container } from 'react-bootstrap';
 import Menu from './Componentes/Menu';
 import Rotas from './rotas'
 import Rodape from './Componentes/Rodape';
-import './App.css';
 
 function App() {
   return (
