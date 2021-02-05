@@ -8,7 +8,7 @@ export default function Home() {
             <p>Aqui em nossa loja, <i>programadores tem desconto </i>nos produtos para sua casa!</p>
             <hr className="my-4"></hr>
             <p>Conheca todos os nossos produtos clicando abaixo!</p>
-                <Button variant="success btn-lg" as={Link} href="/produtos" to="/produtos">Nossos Produtos!</Button>
+            <Button variant="success btn-lg" as={Link} href="/produtos" to="/produtos">Nossos Produtos!</Button>
         </Jumbotron>
     )
 }
