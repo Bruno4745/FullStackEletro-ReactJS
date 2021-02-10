@@ -1,6 +1,7 @@
-import { Form, Button, Container, Table, InputGroup } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import Pedido from '../Componentes/Pedidos';
+import { Form, Button, Container, Table, InputGroup, Spinner } from 'react-bootstrap';
+import { useState, useEffect, lazy, Suspense } from 'react';
+
+const Pedido = lazy(() => import('../Componentes/Pedidos'))
 
 export default function Pedidos(){
     
@@ -119,25 +120,32 @@ export default function Pedidos(){
                 </Form.Group>
             </Form>
             <h5>Pedidos Realizados:</h5>
-            <Table striped bordered hover fluid>
-                <thead>
-                    <tr>
-                        <th>IdPedido</th>
-                        <th>Nome Cliente</th>
-                        <th>Endereco</th>
-                        <th>Telefone</th>
-                        <th>Produto</th>
-                        <th>Valor</th>
-                        <th>Quantidade</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pedidos && pedidos.map(item => <Pedido key={item.idpedidos} id={item.idpedidos} 
-                    nome={item.nome_cliente} endereco={item.endereco} telefone={item.telefone} produto={item.nome_produto}
-                    valor={item.valor_unit} quantidade={item.quantidade} total={item.valor_total} />)}
-                </tbody>
-            </Table>
+            <Suspense fallback={
+                <div className="text-center mt-3">
+                    <Spinner animation="border" variant="dark"/>
+                    <p>Carregando...</p>
+                </div>
+                }>
+                <Table striped bordered hover fluid>
+                    <thead>
+                        <tr>
+                            <th>IdPedido</th>
+                            <th>Nome Cliente</th>
+                            <th>Endereco</th>
+                            <th>Telefone</th>
+                            <th>Produto</th>
+                            <th>Valor</th>
+                            <th>Quantidade</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {pedidos && pedidos.map(item => <Pedido key={item.idpedidos} id={item.idpedidos} 
+                        nome={item.nome_cliente} endereco={item.endereco} telefone={item.telefone} produto={item.nome_produto}
+                        valor={item.valor_unit} quantidade={item.quantidade} total={item.valor_total} />)}
+                    </tbody>
+                </Table>
+            </Suspense>
         </Container>
     )
 }

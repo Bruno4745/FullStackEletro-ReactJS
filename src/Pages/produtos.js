@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { ListGroup, Row, Col, Table, Button } from 'react-bootstrap';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { ListGroup, Row, Col, Table, Button, Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import Produto from '../Componentes/Produto';
+
+const Produto = lazy(() => import('../Componentes/Produto'))
 
 export default function Produtos() {
 
@@ -93,7 +94,14 @@ export default function Produtos() {
                     </ListGroup>
                 </Col>
                 <Col className="col-12 col-sm-6 col-md-8 col-lg-9 mt-3">
-                        {produtos && produtos.map(item => <Produto key={item.idproduto} id={item.idproduto} categoria={item.categoria} descricao={item.descricao} preco={item.preco} precofinal={item.precofinal} imagem={item.imagem}/>)}
+                <Suspense fallback={
+                    <div className="text-center">
+                        <Spinner animation="border" variant="dark"/>
+                        <p>Carregando...</p>
+                    </div>
+                    }>
+                    {produtos && produtos.map(item => <Produto key={item.idproduto} id={item.idproduto} categoria={item.categoria} descricao={item.descricao} preco={item.preco} precofinal={item.precofinal} imagem={item.imagem}/>)}
+                </Suspense>
                 </Col>
             </Row>
         </div>

@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
-import { Jumbotron, Container, Form, Button, Table } from 'react-bootstrap';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { Jumbotron, Container, Form, Button, Table, Spinner } from 'react-bootstrap';
 import ImgWhats from './imagens/whatsapp.png';
 import ImgEmail from './imagens/email.png';
-import Comentarios from '../Componentes/Comentarios'
+
+const Comentarios = lazy(() => import('../Componentes/Comentarios'))
 
 export default function Contato() {
 
@@ -33,7 +34,9 @@ export default function Contato() {
     //FIM - capturar dados do formulario
 
     //INICIO - envia dados do formulario para API inserir no BD
-    const enviaMensagem = async () => {
+    const enviaMensagem = async (evento) => {
+        evento.preventDefault();
+        console.log(dadosForm);
 
         const url = "http://localhost:3500/inserir/comentarios";
         await fetch(url, {
@@ -78,19 +81,26 @@ export default function Contato() {
                     <Button type="reset" variant="warning">Limpar</Button>
                 </Form.Group>
             </Form>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Comentario</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {comentarios && comentarios.map(item => <Comentarios key={item.idcomentario} id={item.idcomentario} nome={item.nome} comentario={item.mensagem} data={item.data} />)}
-                </tbody>
-            </Table>
+            <Suspense fallback={
+                <div className="text-center">
+                    <Spinner animation="border" variant="dark"/>
+                    <p>Carregando...</p>
+                </div>
+                }>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Comentario</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {comentarios && comentarios.map(item => <Comentarios key={item._id} id={item._id} nome={item.nome} comentario={item.mensagem} data={item.data} />)}
+                    </tbody>
+                </Table>
+            </Suspense>
         </Container>
     )
 }
