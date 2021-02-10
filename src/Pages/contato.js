@@ -35,7 +35,7 @@ export default function Contato() {
 
     //INICIO - envia dados do formulario para API inserir no BD
     const enviaMensagem = async (evento) => {
-        evento.preventDefault();
+        //evento.preventDefault();
         console.log(dadosForm);
 
         const url = "http://localhost:3500/inserir/comentarios";
