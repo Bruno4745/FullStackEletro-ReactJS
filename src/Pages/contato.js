@@ -3,7 +3,7 @@ import { Jumbotron, Container, Form, Button, Table, Spinner } from 'react-bootst
 import ImgWhats from './imagens/whatsapp.png';
 import ImgEmail from './imagens/email.png';
 
-const Comentarios = lazy(() => import('../Componentes/Comentarios'))
+const Comentarios = lazy(() => import('../Componentes/Contato'))
 
 export default function Contato() {
 
@@ -93,11 +93,10 @@ export default function Contato() {
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Comentario</th>
-                            <th>Data</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {comentarios && comentarios.map(item => <Comentarios key={item._id} id={item._id} nome={item.nome} comentario={item.mensagem} data={item.data} />)}
+                        {comentarios && comentarios.map(item => <Comentarios key={item._id} id={item._id} nome={item.nome} comentario={item.mensagem} />)}
                     </tbody>
                 </Table>
             </Suspense>
